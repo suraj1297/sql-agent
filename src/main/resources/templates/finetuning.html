@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fine Tuning Status</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/finetune.css">
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Card 1: Aggregation Status -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Aggregation Status</h5>
+                <p class="card-text" th:text="${aggregateStatus}">Aggregation status will be displayed here</p>
+            </div>
+        </div>
+        <!-- Card 2: Fine Tuning Status -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Fine Tuning Status</h5>
+                <p class="card-text" th:text="${fineTuneStatus}">Fine tuning status will be displayed here</p>
+            </div>
+        </div>
+        <!-- Card 3: Fine Tuning Completion Status -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Fine Tuning Completion</h5>
+                <p class="card-text" th:text="${fineTuneCompleteStatus}">Fine tuning completion status will be displayed here</p>
+            </div>
+        </div>
+        <div class="text-center mt-8 button">
+        	<a href="#" onclick="event.preventDefault(); redirectToChat()" class="btn btn-primary">Start Chatting</a>
+        </div>
+    </div>
+    
+    <script th:inline="javascript">
+	    function redirectToChat() {
+	    	
+	            const modelId = [[${modelID}]];
+	            const modelName = [[${modelName}]];
+	            const schemaId = [[${schemaId}]];
+	            const url = `/chat?modelId=${modelId}&modelName=${modelName}&schemaId=${schemaId}`;
+	        
+	            window.location.assign(url);
+	    }
+
+    </script>
+   
+</body>
+</html>

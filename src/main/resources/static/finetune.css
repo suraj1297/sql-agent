@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #003366;
+}
+.container {
+    margin-top: 50px;
+    max-width: 600px;
+}
+.card {
+    background-color: #ffffff;
+    border: 1px solid #b3d9ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 51, 102, 0.2);
+    margin-bottom: 20px;
+}
+.card-title {
+    color: #004080;
+    font-weight: bold;
+}
+.card-text {
+    font-size: 1.1em;
+}
+.card-body {
+    padding: 20px;
+}
+
+.button{
+	margin-top: 4rem;
+	color: white;
+}

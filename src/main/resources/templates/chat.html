@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Session</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/chat.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Chat with Your Sql Agent</h2>
+
+        <div id="chat-window" class="border p-3 mb-3" style="height: 600px; overflow-y: scroll;">
+            <!-- Chat messages will be displayed here -->
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" id="chatInput" class="form-control" placeholder="Type your message here...">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+       <script th:inline="javascript">
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value;
+            const modelName = [[${modelName}]];
+            const schemaId = [[${schemaId}]];
+            if (message.trim() !== '') {
+                // Append the message to the chat window
+                const chatWindow = document.getElementById('chat-window');
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('chat-message', 'user');
+                const bubbleElement = document.createElement('div');
+                bubbleElement.classList.add('chat-bubble', 'user');
+                bubbleElement.textContent = message;
+                messageElement.appendChild(bubbleElement);
+                chatWindow.appendChild(messageElement);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+                
+                // Clear the input field
+                chatInput.value = '';
+                
+                fetch('/chat/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `message=${encodeURIComponent(message)}&modelName=${encodeURIComponent(modelName)}&schemaId=${encodeURIComponent(schemaId)}`
+                })
+                .then(response => response.text())
+                .then(botResponse => {
+	               
+	                const botMessageElement = document.createElement('div');
+	                botMessageElement.classList.add('chat-message', 'bot');
+	                const botBubbleElement = document.createElement('div');
+	                botBubbleElement.classList.add('chat-bubble', 'bot');
+	                botBubbleElement.innerHTML = `<p>${botResponse}</p>`;
+	
+	                botMessageElement.appendChild(botBubbleElement);
+	                chatWindow.appendChild(botMessageElement);
+	                chatWindow.scrollTop = chatWindow.scrollHeight;
+            	})
+            	 .catch(error => {
+	                console.error('Error:', error);
+	                
+	                const errorMessageElement = document.createElement('div');
+	                errorMessageElement.classList.add('chat-message', 'bot');
+	                const errorBubbleElement = document.createElement('div');
+	                errorBubbleElement.classList.add('chat-bubble', 'bot');
+	                errorBubbleElement.textContent = 'Error: Unable to get response from server.';
+	                
+	                errorMessageElement.appendChild(errorBubbleElement);
+	                chatWindow.appendChild(errorMessageElement);
+	                chatWindow.scrollTop = chatWindow.scrollHeight;
+            	});
+
+            }
+           
+        }
+    </script>
+</body>
+</html>

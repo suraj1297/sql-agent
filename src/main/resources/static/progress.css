@@ -1,0 +1,26 @@
+body 
+{
+            font-family: Arial, sans-serif;
+            background-color: #e6f0ff;
+            color: #003366;
+}
+.container {
+    max-width: 600px;
+    margin: 100px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    color: #004080;
+    text-align: center;
+}
+p {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.button{
+	color: white;
+}
